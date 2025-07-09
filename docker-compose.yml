@@ -1,0 +1,26 @@
+# 以下内容是参照着 ai 写的，进行了注释学习
+
+version: '3.8'
+
+services:
+  app:
+    build: . # . 是使用当前目录下的dockerfile
+    container_name: fastapi_server
+    ports:
+      - "4000:4000" # 映射
+    volumes: # 挂载到本地 我认为类似于fastapi的热重载功能（左物右容）
+      - .:/app
+    environment:
+      - "SECRET_KEY=4da4c59f-0618-4d1a-9c16-f000ba823b60" # jwt安全密钥
+      - "SQLALCHEMY_DATABASE_URL=mysql+pymysql://root:root@db:3306/fastapi_test"
+    depends_on: # 依赖于哪些服务
+      - db
+  db:
+    image: mysql
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root # 设置 root 用户密码
+      MYSQL_DATABASE: fastapi_test # 创建一个名为 mydatabase 的数据库
+
+    ports:
+      - "3307:3306" # 映射到物理机3307，方便用 navicat 调试

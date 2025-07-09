@@ -1,0 +1,16 @@
+alembic 迁移命令：
+alembic init alembic
+alembic revision --autogenerate -m "Initial migration, create user table"
+alembic upgrade head
+
+
+get 期望 路径参数(形参) 和 查询参数
+# http://127.0.0.1:8000/items/50?q=test
+
+@app.get("/items/{item_id}")
+async def read_item(item_id: int // 路径参数, q: str = None // 查询参数):
+    return {"item_id": item_id, "query": q}
+
+# 一定要按顺序, 执行顺序从上至下
+@app.get("/users")
+@app.get("/users/{user_id}")

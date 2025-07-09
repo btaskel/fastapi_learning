@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 
-from src.exts import BaseModel
+from src.exts import BaseModel, engine
 
 
 class UserModel(BaseModel):
@@ -9,6 +9,9 @@ class UserModel(BaseModel):
     username = Column(String(64), unique=True, nullable=False, index=True)
     password_hashed = Column(String(128), nullable=False)  # 使用sha256存储
     desc = Column(String(256), nullable=True, index=True)
+
+
+UserModel.metadata.create_all(bind=engine)
 
 if __name__ == '__main__':
     user = UserModel(username="bt", password_hashed="wadawd", desc="eeee")

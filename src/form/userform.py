@@ -1,9 +1,6 @@
-import hashlib
 from typing import Optional
 
 from pydantic import BaseModel, Field
-
-from src.utils import hash_sha256
 
 
 class UserForm(BaseModel):
